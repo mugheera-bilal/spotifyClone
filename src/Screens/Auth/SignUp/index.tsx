@@ -12,6 +12,10 @@ const SignupScreen: FC<IHome> = ({navigation}) => {
         navigation.navigate('login')
     }
 
+    function signupButtonHandler () {
+        navigation.navigate('Home')
+    }
+
   return (
     <View>
       <View style={styles.imageContainer}>
@@ -23,7 +27,8 @@ const SignupScreen: FC<IHome> = ({navigation}) => {
       <InputHolder placeholder="Email Address or Username" />
       <InputHolder placeholder="Password" />
       <InputHolder placeholder="Re Enter Password" />
-      <CustomButton
+      <CustomButton 
+      onPress={signupButtonHandler}
         extraStyle={styles.signupButton}
         extraTextStyle={styles.signupText}>
         SignUp

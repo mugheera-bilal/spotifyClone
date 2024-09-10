@@ -10,4 +10,7 @@ export interface IHome {
     extraStyle? : any
     placeholder? : string
     extraTextStyle? : any
+    name? : any,
+    color? : string
+    extraTitle? : any
 } 

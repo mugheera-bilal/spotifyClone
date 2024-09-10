@@ -20,7 +20,9 @@ function App(): React.JSX.Element {
         <Stack.Screen name="loginOption" component={StackNavigation}  options={{
           headerShown : false, 
         }}/>
-        <Stack.Screen name='homeScreen' component={BottomNavigation}/>
+        <Stack.Screen name='Home' component={BottomNavigation} options={{
+          headerShown : false, 
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
