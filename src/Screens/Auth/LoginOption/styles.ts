@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { theme } from "../../../Constants/Colors/theme";
 
 export const styles = StyleSheet.create({
     imageContainer : {
@@ -23,6 +24,24 @@ export const styles = StyleSheet.create({
         color : 'white',
         fontSize : 34,
         textAlign : 'center',
+        // textAlignVertical : 'center',
         fontWeight : '800'
+    }, 
+    logoStyle : {
+        width : 20,
+        height : 20
+
+    }, 
+    mobileLogoStyle : {
+        width : 30,
+        height : 30
+    },
+    signupButton : {
+        backgroundColor : theme.primary100,
+        borderColor : theme.primary100
+    },
+    loginButton : {
+        borderColor : theme.secondary100
+
     }
 })

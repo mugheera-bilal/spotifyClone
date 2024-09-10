@@ -8,8 +8,13 @@ import { IHome } from '../../../Constants/Interfaces';
 const LoginOption : FC <IHome> = ({navigation}) =>  {
 
     function signupNavigationHandler () {
-        navigation.navigate('login')
+        navigation.navigate('signup')
     }
+    
+    
+    function loginNavigationHandler () {
+      navigation.navigate('login')
+  }
 
   return (
     <View>
@@ -21,11 +26,11 @@ const LoginOption : FC <IHome> = ({navigation}) =>  {
       </View>
 
       <View>
-        <CustomButton onPress={signupNavigationHandler} >Sign Up</CustomButton>
-        <CustomButton>Continue with Phone Number</CustomButton>
-        <CustomButton>Continue with Google</CustomButton>
-        <CustomButton>Continue with Facebook</CustomButton>
-        <CustomButton>Login</CustomButton>
+        <CustomButton onPress={signupNavigationHandler} extraStyle={styles.signupButton}>Sign Up</CustomButton>
+        <CustomButton ImgStyle={styles.mobileLogoStyle} imageSource={images.mobileLogo}>Continue with Phone Number</CustomButton>
+        <CustomButton ImgStyle={styles.logoStyle} imageSource={images.googleLogo}>Continue with Google</CustomButton>
+        <CustomButton ImgStyle={styles.logoStyle} imageSource={images.fbLogo}>Continue with Facebook</CustomButton>
+        <CustomButton onPress= {loginNavigationHandler} extraStyle={styles.loginButton}>Login</CustomButton>
       </View>
     </View>
   );
