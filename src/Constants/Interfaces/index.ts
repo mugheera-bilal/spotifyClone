@@ -8,4 +8,6 @@ export interface IHome {
     imageSource? : ImageSourcePropType
     ImgStyle? : object
     extraStyle? : any
+    placeholder? : string
+    extraTextStyle? : any
 } 
