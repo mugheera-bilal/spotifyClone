@@ -12,5 +12,8 @@ export interface IHome {
     extraTextStyle? : any
     name? : any,
     color? : string
+    size? :number
+    customStyle? : object
     extraTitle? : any
+    text? : string
 } 
