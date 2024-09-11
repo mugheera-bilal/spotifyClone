@@ -9,9 +9,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {theme} from '../../Constants/Colors/theme';
 
 const HomeScreen: FC<IHome> = ({navigation}) => {
-
   function playlistNavigationHandler() {
-    navigation.navigate('Playlist')
+    navigation.navigate('Playlist');
   }
 
   return (
@@ -23,34 +22,29 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
           <View style={styles.rootContainer}>
             <View>
               <View style={styles.titleIcon}>
-                <Title text='Made for you' />
+                <Title text="Made for you" />
                 <View style={styles.iconContainer}>
-                  <IconButton name="notifications-outline" color="white" size={30} />
-                  <IconButton name="timer-outline" color="white" size={30}/>
+                  <IconButton
+                    name="notifications-outline"
+                    color="white"
+                    size={30}
+                  />
+                  <IconButton name="timer-outline" color="white" size={30} />
                   <IconButton name="settings-outline" color="white" size={30} />
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
-                <Card onPress={playlistNavigationHandler}/>
-                <Card />
-              </View>
+              <Card onPress={playlistNavigationHandler} />
+              
+             
             </View>
 
             <View>
-              <Title text='Trending Now' />
-              <View style={{flexDirection: 'row'}}>
-                <Card />
-                <Card />
-                <Card />
-              </View>
+              <Title text="Trending Now" />
+              <Card onPress={playlistNavigationHandler} />
             </View>
             <View>
-              <Title text='Top picks for you' />
-              <View style={{flexDirection: 'row'}}>
-                <Card />
-                <Card />
-                <Card />
-              </View>
+              <Title text="Top picks for you" />
+              <Card onPress={playlistNavigationHandler} />
             </View>
           </View>
         </LinearGradient>

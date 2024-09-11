@@ -1,18 +1,17 @@
 import {FC} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
-import {ScrollView, SectionList, Text, View} from 'react-native';
+import {SectionList, Text, View} from 'react-native';
 import {styles} from './styles';
 import {SEARCHDATA} from '../../../Util/SearchData';
 import Title from '../Title';
-
 
 const COLORS = [
   '#FFA07A',
   '#20B2AA',
   '#FF6347',
   '#4682B4',
-  '#9ACD32',
-  '#5f39e7',
+  '#2e8f4e',
+  '#6f1ed8',
 ];
 
 const SearchCard: FC<IHome> = () => {
@@ -28,7 +27,16 @@ const SearchCard: FC<IHome> = () => {
           </View>
         );
       }}
-      renderSectionHeader={({section: {title}}) => <Title text={title} />}
+      renderSectionHeader={({section: {title}}) => (
+        <View style={{minWidth : '100%'}}>
+          <Title text={title} />
+        </View>
+      )}
+      contentContainerStyle={{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+      }}
     />
   );
 };

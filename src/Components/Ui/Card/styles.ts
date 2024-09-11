@@ -11,8 +11,14 @@ export const styles = StyleSheet.create({
     height: 170,
     marginBottom: 10,
   },
-  textStyle: {
+  titleTextStyle: {
     color: theme.secondary10,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight : '800'
   },
+  textStyle :{
+    color: theme.secondary10,
+    fontSize: 14,
+    fontWeight : '800'
+  }
 });

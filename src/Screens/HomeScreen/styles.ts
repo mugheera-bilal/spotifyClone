@@ -4,7 +4,7 @@ import { theme } from "../../Constants/Colors/theme";
 export const styles = StyleSheet.create({
     rootContainer : {
         flex : 1,
-        height : 950
+        height : 1000
     }, 
     iconContainer : {
         flexDirection :"row",

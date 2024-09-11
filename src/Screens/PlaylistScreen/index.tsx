@@ -27,6 +27,10 @@ const PlaylistScreen: FC<IHome> = ({navigation}) => {
     });
   }, []);
 
+  function musicPlayerNavHandler () {
+    navigation.navigate('MusicPlayer')
+  }
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.imageContainer}>
@@ -59,7 +63,7 @@ const PlaylistScreen: FC<IHome> = ({navigation}) => {
         <Image style={styles.playLogoStyle} source={images.playLogo} />
       </View>
 
-      <ListCard />
+      <ListCard onPress={musicPlayerNavHandler}/>
     </View>
   );
 };
