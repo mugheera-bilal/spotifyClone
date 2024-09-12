@@ -5,6 +5,7 @@ import {images} from '../../Assets/Images';
 import {styles} from './styles';
 import IconButton from '../../Components/Ui/IconButton';
 import ListCard from '../../Components/Ui/ListCard';
+import LogoButton from '../../Components/Ui/LogoButton';
 
 const PlaylistScreen: FC<IHome> = ({navigation}) => {
   function backButtonHandler() {
@@ -47,23 +48,15 @@ const PlaylistScreen: FC<IHome> = ({navigation}) => {
         <Text style={styles.textStyle}>191,165 Likes . 3h 45min</Text>
       </View>
       <View style={styles.logosContainer}>
-        <View style={{flexDirection: 'row'}}>
-          <IconButton
-            name="heart-outline"
-            color="white"
-            size={35}
-            customStyle={{marginHorizontal: 10}}
-          />
-          <IconButton
-            name="ellipsis-vertical-outline"
-            color="white"
-            size={30}
-          />
+        <View style={styles.playLogoContainer}>
+          <LogoButton  source={images.heartLogo}/>
+          <LogoButton overrideStyle={styles.overridePropLogo} source={images.propertiesLogo}/>
         </View>
-        <Image style={styles.playLogoStyle} source={images.playLogo} />
+        <LogoButton source={images.playGreenLogo}/>
       </View>
 
       <ListCard onPress={musicPlayerNavHandler}/>
+
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../Constants/Colors/theme';
+import { Fonts } from '../../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,11 +15,14 @@ export const styles = StyleSheet.create({
   titleTextStyle: {
     color: theme.secondary10,
     fontSize: 18,
+    fontFamily : Fonts.gotham,
     fontWeight : '800'
   },
   textStyle :{
     color: theme.secondary10,
     fontSize: 14,
-    fontWeight : '800'
+    fontWeight : '800',
+    fontFamily : Fonts.gotham,
+
   }
 });

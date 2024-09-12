@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { theme } from "../../../Constants/Colors/theme";
+import { Fonts } from "../../../Constants/Fonts/Fonts";
 
 export const styles = StyleSheet.create({
     inputContainer : {
@@ -16,6 +17,8 @@ export const styles = StyleSheet.create({
         // textAlign : 'center',
         marginLeft : 30,
         fontSize : 16,
-        color :  theme.secondary50
+        color :  theme.secondary50,
+    fontFamily : Fonts.gotham,
+
     }
 })

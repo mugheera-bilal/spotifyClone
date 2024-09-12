@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Fonts } from "../../../Constants/Fonts/Fonts";
 
 export const styles = StyleSheet.create({
     searchContainer : {
@@ -18,6 +19,8 @@ export const styles = StyleSheet.create({
     searchText : {
         fontSize : 18,
         marginLeft : 10,
+    fontFamily : Fonts.gotham,
+
         width : '100%',
         fontWeight : '900'
     }

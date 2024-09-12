@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { Fonts } from '../../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   rowContainer: {
@@ -19,6 +20,8 @@ export const styles = StyleSheet.create({
   textStyle : {
     color : 'white',
     fontSize : 18,
+    fontFamily : Fonts.gotham,
+
     fontWeight : '800'
   }
 });

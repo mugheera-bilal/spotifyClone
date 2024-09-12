@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../Constants/Colors/theme';
+import { Fonts } from '../../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   imageContainer: {
@@ -23,6 +24,8 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 28,
     textAlign: 'center',
+    fontFamily : Fonts.gotham,
+
     // textAlignVertical : 'center',
     fontWeight: '800',
   },
@@ -39,6 +42,8 @@ export const styles = StyleSheet.create({
 
   lastText: {
     color: 'white',
+    fontFamily : Fonts.gotham,
+
     padding: 10,
     textAlign: 'center',
 },

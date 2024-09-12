@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../Constants/Colors/theme';
+import { Fonts } from '../../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   button: {
@@ -24,6 +25,8 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: '800',
+    fontFamily : Fonts.gotham,
+
   },
   innerStyle: {
     flexDirection: 'row',

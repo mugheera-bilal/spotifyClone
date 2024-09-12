@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../Constants/Colors/theme';
+import { Fonts } from '../../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   imageContainer: {
@@ -23,6 +24,8 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 28,
     textAlign: 'center',
+    fontFamily : Fonts.gotham,
+
     fontWeight: '800',
   },
   loginButton: {
@@ -40,6 +43,8 @@ export const styles = StyleSheet.create({
     color: 'white',
     padding: 10,
     textAlign: 'center',
+    fontFamily : Fonts.gotham,
+
   },
 
 lastTextButton: {

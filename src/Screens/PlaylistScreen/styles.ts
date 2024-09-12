@@ -1,12 +1,14 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../Constants/Colors/theme';
+import { Fonts } from '../../Constants/Fonts/Fonts';
 
 export const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    // height : 950,
+    // height : 1000,
     paddingHorizontal: 4,
     backgroundColor: theme.secondary100,
+    // paddingBottom : 60
     // justifyContent : 'center'
   },
   imageContainer: {
@@ -20,7 +22,8 @@ export const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontSize: 16,
-    marginLeft : 10
+    fontFamily : Fonts.poppins,
+    marginLeft: 10,
   },
   logoStyle: {
     width: 30,
@@ -31,6 +34,8 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '900',
+    fontFamily : Fonts.gotham,
+
     textAlignVertical: 'center',
     margin: 10,
   },
@@ -39,8 +44,14 @@ export const styles = StyleSheet.create({
     height: 100,
   },
   logosContainer: {
+    marginHorizontal : 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  playLogoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  overridePropLogo: {marginHorizontal: 20},
 });
