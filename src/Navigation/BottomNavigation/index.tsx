@@ -1,11 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../../Screens/HomeScreen';
 import SearchScreen from '../../Screens/SearchScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {theme} from '../../Constants/Colors/theme';
-import PlaylistScreen from '../../Screens/PlaylistScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import homeStackNavigation from '../HomeStackNavigation';
 import HomeStackNavigation from '../HomeStackNavigation';
 
 const Tab = createBottomTabNavigator();

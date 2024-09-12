@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical : 5
+    marginVertical : 5,
+    // paddingBottom : 10
   },
   imageStyle: {
     width: 65,
@@ -42,5 +43,8 @@ export const styles = StyleSheet.create({
 
     height : 15,
     marginTop : 4
+  }, 
+  pressed : {
+    opacity : 0.5
   }
 });

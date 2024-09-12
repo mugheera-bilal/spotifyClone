@@ -16,4 +16,6 @@ export interface IHome {
     customStyle? : object
     extraTitle? : any
     text? : string
+    source? : ImageSourcePropType
+    overrideStyle? : object
 } 

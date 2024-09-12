@@ -7,6 +7,8 @@ import IconButton from '../../Components/Ui/IconButton';
 import Card from '../../Components/Ui/Card';
 import LinearGradient from 'react-native-linear-gradient';
 import {theme} from '../../Constants/Colors/theme';
+import LogoButton from '../../Components/Ui/LogoButton';
+import { images } from '../../Assets/Images';
 
 const HomeScreen: FC<IHome> = ({navigation}) => {
   function playlistNavigationHandler() {
@@ -24,13 +26,10 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
               <View style={styles.titleIcon}>
                 <Title text="Made for you" />
                 <View style={styles.iconContainer}>
-                  <IconButton
-                    name="notifications-outline"
-                    color="white"
-                    size={30}
-                  />
-                  <IconButton name="timer-outline" color="white" size={30} />
-                  <IconButton name="settings-outline" color="white" size={30} />
+                  <LogoButton overrideStyle={{marginHorizontal : 20}} source={images.bellLogo}/>
+                  <LogoButton overrideStyle={{marginHorizontal : 20}} source={images.historyLogo}/>
+                  <LogoButton overrideStyle={{marginHorizontal : 20}} source={images.settingLogo}/>
+              
                 </View>
               </View>
               <Card onPress={playlistNavigationHandler} />

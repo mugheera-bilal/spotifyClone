@@ -13,7 +13,7 @@ const Card: FC<IHome> = ({onPress}) => {
       horizontal={true}
       renderItem={({item}) => {
         return (
-          <Pressable onPress={onPress}>
+          <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed}>
             <View style={styles.container}>
               <Image style={styles.imageStyle} source={images.CardPics} />
               <Text style={styles.titleTextStyle}>{item.title}</Text>

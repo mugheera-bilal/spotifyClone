@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   boxContainer: {
     padding: 10,
     margin: 10,
-    backgroundColor : '#fc5470',
+    // backgroundColor : '#fc5470',
     borderRadius : 5,
     width : 185,
     height : 120,
@@ -23,5 +23,8 @@ export const styles = StyleSheet.create({
     fontFamily : Fonts.gotham,
 
     fontWeight : '800'
+  },
+  pressed : {
+    opacity : 0.5
   }
 });

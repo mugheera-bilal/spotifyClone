@@ -66,5 +66,8 @@ export const styles = StyleSheet.create({
     fontFamily : Fonts.gotham,
 
     color: 'white'
+  },
+  pressed : {
+    opacity : 0.5
   }
 });

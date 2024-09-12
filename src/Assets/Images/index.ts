@@ -18,6 +18,7 @@ export const images = {
   shufleLogo: require('../../../assets/images/shufleLogo.png'),
   previousPlayLogo: require('../../../assets/images/previousPlayLogo.png'),
   pauseLogo: require('../../../assets/images/pauseLogo.png'),
+  playLogo: require('../../../assets/images/playLogo3.png'),
   nextPlayLogo: require('../../../assets/images/nextPlayLogo.png'),
   loopLogo: require('../../../assets/images/loopLogo.png'),
   castLogo: require('../../../assets/images/castLogo.png'),

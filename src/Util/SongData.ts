@@ -1,8 +1,9 @@
 export const SONGSDATA = [
   {
     id: '1',
-    title: 'Blinding Lights',
-    artist: 'The Weeknd',
+    image : '',
+    title: 'Perfect',
+    artist: 'Ed Sheeran',
     album: 'After Hours',
     duration: '3:20',
   },

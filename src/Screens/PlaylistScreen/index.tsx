@@ -1,6 +1,6 @@
 import {FC, useEffect} from 'react';
 import {IHome} from '../../Constants/Interfaces';
-import {Image, ScrollView, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {images} from '../../Assets/Images';
 import {styles} from './styles';
 import IconButton from '../../Components/Ui/IconButton';

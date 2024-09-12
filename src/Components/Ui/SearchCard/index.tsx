@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
-import {SectionList, Text, View} from 'react-native';
+import {Pressable, SectionList, Text, View} from 'react-native';
 import {styles} from './styles';
 import {SEARCHDATA} from '../../../Util/SearchData';
 import Title from '../Title';
@@ -14,7 +14,7 @@ const COLORS = [
   '#6f1ed8',
 ];
 
-const SearchCard: FC<IHome> = () => {
+const SearchCard: FC<IHome> = ({onPress}) => {
   return (
     <SectionList
       sections={SEARCHDATA}
@@ -22,9 +22,12 @@ const SearchCard: FC<IHome> = () => {
       renderItem={({item, index}) => {
         const backgroundColor = COLORS[index % COLORS.length];
         return (
+          <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed}>
+
           <View style={[styles.boxContainer, {backgroundColor}]}>
             <Text style={styles.textStyle}>{item}</Text>
           </View>
+          </Pressable>
         );
       }}
       renderSectionHeader={({section: {title}}) => (

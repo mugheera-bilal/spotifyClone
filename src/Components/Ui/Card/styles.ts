@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
   },
+  pressed : {
+opacity : 0.8
+
+  },
   imageStyle: {
     width: 170,
     height: 170,
