@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { ImageSourcePropType } from "react-native";
 
 export interface IHome {
+    searchingCategories? : any
     children? : ReactNode
     onPress? : () => void
     navigation? : any

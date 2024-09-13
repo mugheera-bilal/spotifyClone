@@ -1,8 +1,7 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
 import {Pressable, SectionList, Text, View} from 'react-native';
 import {styles} from './styles';
-import {SEARCHDATA} from '../../../Util/SearchData';
 import Title from '../Title';
 
 const COLORS = [
@@ -12,12 +11,20 @@ const COLORS = [
   '#4682B4',
   '#2e8f4e',
   '#6f1ed8',
+  '#f85c1e',
+  '#14706c',
+  '#ff8872',
+  '#005eaa',
+  '#336845',
+  '#b57cff',
 ];
 
-const SearchCard: FC<IHome> = ({onPress}) => {
+
+
+const SearchCard: FC<IHome> = ({onPress, searchingCategories}) => {
   return (
     <SectionList
-      sections={SEARCHDATA}
+      sections={searchingCategories}
       keyExtractor={(item, index) => item + index}
       renderItem={({item, index}) => {
         const backgroundColor = COLORS[index % COLORS.length];

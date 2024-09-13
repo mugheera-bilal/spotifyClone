@@ -1,11 +1,33 @@
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 import CustomButton from '../../../Components/Ui/CustomButton';
 import {images} from '../../../Assets/Images';
 import {styles} from './styles';
 import { IHome } from '../../../Constants/Interfaces';
+import { fetchSpotifyToken, getCategories } from '../../../Apis';
 
 const LoginOption : FC <IHome> = ({navigation}) =>  {
+
+const [browseCategories , setBrowseCategories] = useState([])
+
+  useEffect(() => {
+    const init = async () => {
+      const token = await fetchSpotifyToken();
+      console.log('..........' , token);
+      
+      if (token) {
+        const response = await getCategories(); 
+        const categoryNames = response.data.categories.items.map(
+          category => category.name,
+        );
+        console.log('Category Names ========>', categoryNames);
+        setBrowseCategories(categoryNames)
+        
+      }
+    };
+  
+    init();
+  } , [])
 
     function signupNavigationHandler () {
         navigation.navigate('signup')

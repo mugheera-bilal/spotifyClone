@@ -1,16 +1,17 @@
 import {FC} from 'react';
 import {IHome} from '../../Constants/Interfaces';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {styles} from './styles';
 import Title from '../../Components/Ui/Title';
-import IconButton from '../../Components/Ui/IconButton';
 import Card from '../../Components/Ui/Card';
 import LinearGradient from 'react-native-linear-gradient';
-import {theme} from '../../Constants/Colors/theme';
 import LogoButton from '../../Components/Ui/LogoButton';
 import { images } from '../../Assets/Images';
 
 const HomeScreen: FC<IHome> = ({navigation}) => {
+
+  
+
   function playlistNavigationHandler() {
     navigation.navigate('Playlist');
   }
