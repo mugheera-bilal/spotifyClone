@@ -19,8 +19,6 @@ const COLORS = [
   '#b57cff',
 ];
 
-
-
 const SearchCard: FC<IHome> = ({onPress, searchingCategories}) => {
   return (
     <SectionList
@@ -29,16 +27,17 @@ const SearchCard: FC<IHome> = ({onPress, searchingCategories}) => {
       renderItem={({item, index}) => {
         const backgroundColor = COLORS[index % COLORS.length];
         return (
-          <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed}>
-
-          <View style={[styles.boxContainer, {backgroundColor}]}>
-            <Text style={styles.textStyle}>{item}</Text>
-          </View>
+          <Pressable
+            onPress={onPress}
+            style={({pressed}) => pressed && styles.pressed}>
+            <View style={[styles.boxContainer, {backgroundColor}]}>
+              <Text style={styles.textStyle}>{item}</Text>
+            </View>
           </Pressable>
         );
       }}
       renderSectionHeader={({section: {title}}) => (
-        <View style={{minWidth : '100%'}}>
+        <View style={{minWidth: '100%'}}>
           <Title text={title} />
         </View>
       )}

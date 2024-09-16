@@ -19,4 +19,6 @@ export interface IHome {
     text? : string
     source? : ImageSourcePropType
     overrideStyle? : object
+    albumsRenderData? : any
+    tracksRenderData? : any
 } 
