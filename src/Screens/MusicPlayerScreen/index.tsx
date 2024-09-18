@@ -6,15 +6,37 @@ import {styles} from './styles';
 import {images} from '../../Assets/Images';
 import LogoButton from '../../Components/Ui/LogoButton';
 import Slider from '@react-native-community/slider';
-import IconButton from '../../Components/Ui/IconButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {getSongs} from '../../Apis';
 
 // const pause = images.pauseLogo;
 // const play = images.playLogo;
 
-const MusicPlayerScreen: FC<IHome> = ({navigation}) => {
+const MusicPlayerScreen: FC<IHome> = ({navigation, route}) => {
+  const [songName, setSongName] = useState<any>();
+
+  const {songsId} = route.params;
+  // console.log('==============>', songsId);
+
   useEffect(() => {
-    // Hide the bottom tab bar when this screen is focused
+    const init = async () => {
+      const songsData = await getSongs(songsId);
+      // console.log(
+      //   '>>>>>>>>>>>>',
+      //   JSON.stringify(songsData?.data.name, null, 2),
+      // );
+      // console.log(
+      //   '>>>>>>>>>>>>',
+      //   JSON.stringify(songsData?.data.artists[0].name, null, 2),
+      // );
+      setSongName(songsData);
+      return songsData;
+    };
+    init();
+
+  }, []);
+
+  useEffect(() => {
     navigation.getParent()?.setOptions({
       tabBarStyle: {display: 'none'},
     });
@@ -52,19 +74,24 @@ const MusicPlayerScreen: FC<IHome> = ({navigation}) => {
       headerTitle: () => {
         return (
           <View style={styles.headerContainer}>
-            <Text style={styles.headerCenter}>"Perfect" in Songs</Text>
+            <Text style={styles.headerCenter}>{songName?.data.name} Song</Text>
           </View>
         );
       },
       headerTitleAlign: 'center',
       headerBackVisible: false,
       headerRight: () => {
-        return <LogoButton overrideStyle={{marginHorizontal : 20}} source={images.propertiesLogo} />;
+        return (
+          <LogoButton
+            overrideStyle={{marginHorizontal: 20}}
+            source={images.propertiesLogo}
+          />
+        );
       },
       headerLeft: () => {
         return (
           <LogoButton
-          overrideStyle={{marginHorizontal : 20}}
+            overrideStyle={{marginHorizontal: 20}}
             onPress={backButtonHandler}
             source={images.arrowDownLogo}
           />
@@ -81,8 +108,8 @@ const MusicPlayerScreen: FC<IHome> = ({navigation}) => {
         <Image style={styles.imageStyle} source={images.perfectCover} />
         <View style={styles.titleContainer}>
           <View>
-            <Text style={styles.titleText}>Perfect</Text>
-            <Text style={styles.topTextStyle1}>Ed Sheeran</Text>
+            <Text style={styles.titleText}>{songName?.data.name}</Text>
+            <Text style={styles.topTextStyle1}>{songName?.data.artists[0].name}</Text>
           </View>
           <LogoButton source={images.heartLogo} />
         </View>

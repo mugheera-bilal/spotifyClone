@@ -12,7 +12,7 @@ const CardList: FC<IHome> = ({tracksRenderData, onPress}) => {
       renderItem={({item}) => {
         // console.log('songs id', item.id);
 
-        return <Card onPress={onPress} item={item} />;
+        return <Card onPress={() => onPress(item.id)} item={item} />;
       }}
     />
   );

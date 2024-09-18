@@ -132,6 +132,43 @@ export const getRecommendation = async () => {
   }
 }
 
+export const getAlbumSongs = async (id : string) =>  {
+  try{
+    const accessToken = await AsyncStorage.getItem('access_token')
+    const albumSongs = await axios.get(
+      `https://api.spotify.com/v1/albums/${id}`, {
+        headers : {Authorization : 'Bearer ' + accessToken},
+
+      }
+    )
+    return albumSongs
+  } catch (error) {
+    console.log('error' , error);
+    
+  }
+
+}
+
+
+
+export const getSongs = async (id : string) =>  {
+  try{
+    const accessToken = await AsyncStorage.getItem('access_token')
+    const albumSongs = await axios.get(
+      `https://api.spotify.com/v1/tracks/${id}`, {
+        headers : {Authorization : 'Bearer ' + accessToken},
+
+      }
+    )
+    
+    return albumSongs
+  } catch (error) {
+    console.log('error' , error);
+    
+  }
+
+}
+
 export const getFeaturedPlaylist = async () => {
   try {
     const accesstoken = await AsyncStorage.getItem('access_token');
@@ -149,5 +186,6 @@ export const getFeaturedPlaylist = async () => {
       throw error;
   }
 };
+
 
 

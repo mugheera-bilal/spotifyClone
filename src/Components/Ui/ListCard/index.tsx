@@ -7,16 +7,16 @@ import {images} from '../../../Assets/Images';
 import {styles} from './styles';
 import {SONGSDATA} from '../../../Util/SongData';
 
-const PlaylistCard: FC<IHome> = ({onPress}) => {
+const PlaylistCard: FC<IHome> = ({onPress, playlistRenderData}) => {
   return (
     <View style={{ flex : 1}}>
 
     <FlatList
-      data={SONGSDATA}
-      keyExtractor={item => item.id}
+      data={playlistRenderData}
+      // keyExtractor={item => item.id}
       renderItem={({item}) => {
         return (
-          <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed}>
+          <Pressable onPress={() => onPress(item.id)} style={({pressed}) => pressed && styles.pressed}>
             <View style={styles.rootContainer}>
               <View style={{flexDirection: 'row'}}>
                 <View>
@@ -26,10 +26,10 @@ const PlaylistCard: FC<IHome> = ({onPress}) => {
                     />
                 </View>
                 <View style={{margin: '2%'}}>
-                  <Text style={styles.titleTextStyle}>{item.title}</Text>
+                  <Text style={styles.titleTextStyle}>{item.name}</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={styles.lyricsText}>LYRICS</Text>
-                    <Text style={styles.textStyle}>{item.artist}</Text>
+                    <Text style={styles.textStyle}>{item.artists[0].name}</Text>
                   </View>
                 </View>
               </View>

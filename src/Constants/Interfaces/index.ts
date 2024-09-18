@@ -4,7 +4,7 @@ import { ImageSourcePropType } from "react-native";
 export interface IHome {
     searchingCategories? : any
     children? : ReactNode
-    onPress? : () => void
+    onPress? : any
     navigation? : any
     route? : any
     imageSource? : ImageSourcePropType
@@ -22,5 +22,7 @@ export interface IHome {
     overrideStyle? : object
     albumsRenderData? : any
     tracksRenderData? : any
+    playlistRenderData? :any
     item? : any
+    albumId? :any
 } 

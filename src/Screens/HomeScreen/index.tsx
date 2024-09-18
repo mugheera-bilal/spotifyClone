@@ -20,55 +20,55 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
   const [tracks, setTracks] = useState<any[]>([]);
   const [recommendation, setRecommendation] = useState<any[]>([]);
 
-  
   useEffect(() => {
     const init = async () => {
       const token = await fetchSpotifyToken();
       console.log('..........', token);
-      
+
       if (token) {
         const albumsData: any = await getAlbums();
         if (albumsData?.data?.albums) {
+          // const albumId = albumsData.data.albums.items.map(item => item.id);
+          // console.log('id  ==>>', albumId);
 
-          // console.log('albums == > ', JSON.stringify(albumsData.data.albums, null, 2));
-          // console.log(albumsData.data.albums.items.map(item => item.name));
-          // console.log('id ===> ',albumsData.data.albums.items.map(item => item.id));
-          const albumId = albumsData.data.albums.items.map(item => item.id)
-          console.log('id  ==>>', albumId);
-          
           setAlbums(albumsData?.data.albums.items);
         } else {
-          console.log('error fetching albums data' , albumsData);
-          
+          console.log('error fetching albums data', albumsData);
         }
-        // console.log('artist image',artistData?.data.artists[0].images[1].url);
-        
+
         const tracksData = await getTracks();
         if (tracksData?.data?.tracks) {
-          // console.log('First Track Album Name:', tracksData.data.tracks[0]?.album?.name);
-          // console.log('First Track Artist Name:', tracksData.data.tracks[0]?.album?.artists[0]?.name);
-          console.log('tracks id',tracksData.data.tracks.map((item) => item.id));
-          
-          setTracks(tracksData.data.tracks); 
+          setTracks(tracksData.data.tracks);
         } else {
           console.error('Error fetching tracks data:', tracksData);
         }
-        
-        const recommendationData = await getRecommendation()
-        // console.log('getRecommendation',recommendationData?.data.tracks);
-        setRecommendation(recommendationData?.data.tracks)
-        
+
+        const recommendationData = await getRecommendation();
+
+        setRecommendation(recommendationData?.data.tracks);
       }
     };
     init();
   }, []);
-  
-  function playlistNavigationHandler() {
-    navigation.navigate('Playlist'
-      
-    );
+
+  // console.log('albums ==>>',albums);
+
+  function playlistNavigationHandler(id) {
+    // console.log('id ==============>', id);
+
+    navigation.navigate('Playlist', {
+      albumId: id,
+    });
   }
-  
+
+  function musicPlayerNavigationHandler(id) {
+    // console.log('id ==============>', id);
+
+    navigation.navigate('MusicPlayer', {
+      songsId: id,
+    });
+  }
+
   return (
     <>
       <ScrollView>
@@ -83,36 +83,36 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
                   <LogoButton
                     overrideStyle={{marginHorizontal: 20}}
                     source={images.bellLogo}
-                    />
+                  />
                   <LogoButton
                     overrideStyle={{marginHorizontal: 20}}
                     source={images.historyLogo}
-                    />
+                  />
                   <LogoButton
                     overrideStyle={{marginHorizontal: 20}}
                     source={images.settingLogo}
-                    />
+                  />
                 </View>
               </View>
               <ArtistCard
                 albumsRenderData={albums}
-                onPress={playlistNavigationHandler}
-                />
+                onPress={id => playlistNavigationHandler(id)}
+              />
             </View>
 
             <View>
               <Title text="Trending Now" />
               <CardList
                 tracksRenderData={tracks}
-                onPress={playlistNavigationHandler}
-                />
+                onPress={(id) => musicPlayerNavigationHandler(id)}
+              />
             </View>
             <View>
               <Title text="Top picks for you" />
               <CardList
                 tracksRenderData={recommendation}
-                onPress={playlistNavigationHandler}
-                />
+                onPress={(id) => musicPlayerNavigationHandler(id)}
+              />
             </View>
           </View>
         </LinearGradient>
@@ -122,11 +122,3 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
 };
 
 export default HomeScreen;
-
-
-// const [playlist, setPlaylist] = useState<any[]>([]);
-
-
-// const featuredPlaylist = await getFeaturedPlaylist()
-// console.log('featuredplaylist',JSON.stringify(featuredPlaylist, null, 2));
-// setPlaylist(featuredPlaylist)
