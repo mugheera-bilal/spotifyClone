@@ -86,7 +86,7 @@ export const getAlbums = async () => {
   try {
     const accesstoken = await AsyncStorage.getItem('access_token');
     const albums = await axios.get(
-      'https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTWGtFfWp7KSQTwWOyo%2C2noRn2Aes5aoNVsU6iWThc',
+      'https://api.spotify.com/v1/browse/new-releases',
       {
         headers: {Authorization: 'Bearer ' + accesstoken},
       },

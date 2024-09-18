@@ -3,7 +3,6 @@ import {IHome} from '../../Constants/Interfaces';
 import {ScrollView, View} from 'react-native';
 import {styles} from './styles';
 import Title from '../../Components/Ui/Title';
-import Card from '../../Components/Ui/Card';
 import LinearGradient from 'react-native-linear-gradient';
 import LogoButton from '../../Components/Ui/LogoButton';
 import {images} from '../../Assets/Images';
@@ -14,8 +13,9 @@ import {
   getTracks,
 } from '../../Apis';
 import ArtistCard from '../../Components/Ui/ArtistCard';
+import CardList from '../../Components/CardList';
 
-const HomeScreen: FC<IHome> = ({navigation}) => {
+const HomeScreen: FC<IHome> = ({navigation, route}) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [tracks, setTracks] = useState<any[]>([]);
   const [recommendation, setRecommendation] = useState<any[]>([]);
@@ -31,7 +31,12 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
         if (albumsData?.data?.albums) {
 
           // console.log('albums == > ', JSON.stringify(albumsData.data.albums, null, 2));
-          setAlbums(albumsData?.data.albums);
+          // console.log(albumsData.data.albums.items.map(item => item.name));
+          // console.log('id ===> ',albumsData.data.albums.items.map(item => item.id));
+          const albumId = albumsData.data.albums.items.map(item => item.id)
+          console.log('id  ==>>', albumId);
+          
+          setAlbums(albumsData?.data.albums.items);
         } else {
           console.log('error fetching albums data' , albumsData);
           
@@ -42,6 +47,8 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
         if (tracksData?.data?.tracks) {
           // console.log('First Track Album Name:', tracksData.data.tracks[0]?.album?.name);
           // console.log('First Track Artist Name:', tracksData.data.tracks[0]?.album?.artists[0]?.name);
+          console.log('tracks id',tracksData.data.tracks.map((item) => item.id));
+          
           setTracks(tracksData.data.tracks); 
         } else {
           console.error('Error fetching tracks data:', tracksData);
@@ -57,7 +64,9 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
   }, []);
   
   function playlistNavigationHandler() {
-    navigation.navigate('Playlist');
+    navigation.navigate('Playlist'
+      
+    );
   }
   
   return (
@@ -93,14 +102,14 @@ const HomeScreen: FC<IHome> = ({navigation}) => {
 
             <View>
               <Title text="Trending Now" />
-              <Card
+              <CardList
                 tracksRenderData={tracks}
                 onPress={playlistNavigationHandler}
                 />
             </View>
             <View>
               <Title text="Top picks for you" />
-              <Card
+              <CardList
                 tracksRenderData={recommendation}
                 onPress={playlistNavigationHandler}
                 />

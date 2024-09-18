@@ -4,8 +4,8 @@ import {Image, Text, View} from 'react-native';
 import {images} from '../../Assets/Images';
 import {styles} from './styles';
 import IconButton from '../../Components/Ui/IconButton';
-import ListCard from '../../Components/Ui/ListCard';
 import LogoButton from '../../Components/Ui/LogoButton';
+import PlaylistCard from '../../Components/Ui/ListCard';
 
 const PlaylistScreen: FC<IHome> = ({navigation}) => {
   function backButtonHandler() {
@@ -55,7 +55,7 @@ const PlaylistScreen: FC<IHome> = ({navigation}) => {
         <LogoButton source={images.playGreenLogo}/>
       </View>
 
-      <ListCard onPress={musicPlayerNavHandler}/>
+      <PlaylistCard onPress={musicPlayerNavHandler}/>
 
     </View>
   );

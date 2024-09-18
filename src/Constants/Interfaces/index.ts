@@ -6,6 +6,7 @@ export interface IHome {
     children? : ReactNode
     onPress? : () => void
     navigation? : any
+    route? : any
     imageSource? : ImageSourcePropType
     ImgStyle? : object
     extraStyle? : any
@@ -21,4 +22,5 @@ export interface IHome {
     overrideStyle? : object
     albumsRenderData? : any
     tracksRenderData? : any
+    item? : any
 } 

@@ -7,7 +7,7 @@ import {images} from '../../../Assets/Images';
 import {styles} from './styles';
 import {SONGSDATA} from '../../../Util/SongData';
 
-const ListCard: FC<IHome> = ({onPress}) => {
+const PlaylistCard: FC<IHome> = ({onPress}) => {
   return (
     <View style={{ flex : 1}}>
 
@@ -49,4 +49,4 @@ const ListCard: FC<IHome> = ({onPress}) => {
   );
 };
 
-export default ListCard;
+export default PlaylistCard;
