@@ -23,7 +23,6 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
         //   ' albumSongs?.data?.tracks.items duration =============>',
         //   albumSongs?.data?.tracks.items.map((item) => item.duration_ms),
         // );
-
       } catch (error) {
         console.error('Error fetching songs:', error);
       }
@@ -66,35 +65,34 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   useEffect(() => {
     const fetchSongsForAllAlbums = async () => {
       try {
-    let albumSongs = await getAlbumSongs(albumId);
-    setSongsData(albumSongs?.data);
-    const totalDurationMs = albumSongs?.data?.tracks.items.reduce(
-      (acc, song) => acc + song.duration_ms,
-      0,
-    );
+        let albumSongs = await getAlbumSongs(albumId);
+        setSongsData(albumSongs?.data);
+        const totalDurationMs = albumSongs?.data?.tracks.items.reduce(
+          (acc, song) => acc + song.duration_ms,
+          0,
+        );
 
-    // console.log('Total Duration in ms:', totalDurationMs);
+        // console.log('Total Duration in ms:', totalDurationMs);
 
-    const hours = Math.floor(totalDurationMs / 3600000);
-    const minutes = Math.floor((totalDurationMs % 3600000) / 60000);
-    const seconds = Math.floor((totalDurationMs % 60000) / 1000);
+        const hours = Math.floor(totalDurationMs / 3600000);
+        const minutes = Math.floor((totalDurationMs % 3600000) / 60000);
+        const seconds = Math.floor((totalDurationMs % 60000) / 1000);
 
-    // console.log(`Formatted Time: ${hours}h ${minutes}m ${seconds}s`);
+        // console.log(`Formatted Time: ${hours}h ${minutes}m ${seconds}s`);
 
-    const formatted = `${hours}h ${minutes}m ${seconds}s`;
-    setFormattedTime(`${hours}h ${minutes}m ${seconds}s`);
-  } catch (error) {
-    console.error('Error fetching songs:', error);
-  }
-};
+        // const formatted = `${hours}h ${minutes}m ${seconds}s`;
+        setFormattedTime(`${hours}h ${minutes}m ${seconds}s`);
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+      }
+    };
 
-if (albumId?.length) {
-  fetchSongsForAllAlbums();
-}
+    if (albumId?.length) {
+      fetchSongsForAllAlbums();
+    }
   }, [songsData]);
 
   // console.log(songsData.artists[0].name);
-  
 
   return (
     <View style={styles.rootContainer}>
@@ -103,9 +101,8 @@ if (albumId?.length) {
       </View>
       {songsData && (
         <Text style={styles.textStyle}>
-          Tune in to Top Tracks from {songsData?.tracks?.items[0]?.artists[0]?.name}
-
-          
+          Tune in to Top Tracks from{' '}
+          {songsData?.tracks?.items[0]?.artists[0]?.name}
         </Text>
       )}
       <View style={{flexDirection: 'row'}}>

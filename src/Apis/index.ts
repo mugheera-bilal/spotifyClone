@@ -5,10 +5,28 @@ export const fetchSpotifyToken = async () => {
   try {
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
-    params.append('client_id', '2d3845c960e04d32af4d1d92255a4010');
-    params.append('client_secret', '4391eb1e32794453a865f329d30dca8d');
+    params.append('client_id', '3e54cdfff4614487a4d334f528f9698a');
+    params.append('client_secret', '36025b877230438691105c08c16a90dc');
     const accessToken = await AsyncStorage.getItem('access_token');
     console.log('token above condition', accessToken);
+
+
+    // const axiosInstance = axios.create({
+    //   baseURL: 'https://accounts.spotify.com/api/token',
+    //   // other configurations
+    // })
+    
+    // axiosInstance.interceptors.response.use(
+    //   (response) => response,
+    //   (error) => {
+    //     if (error.response && error.response.status === 401) {
+    //       console.log('call the refresh token api here')
+    //       // Handle 401 error, e.g., redirect to login or refresh token
+    //     }
+    //     return Promise.reject(error)
+    //   },
+    // )
+    
 
     if (accessToken) {
       return accessToken;
@@ -29,6 +47,8 @@ export const fetchSpotifyToken = async () => {
       console.log('Access token:', access_token);
 
       await AsyncStorage.setItem('access_token', access_token);
+      console.log(accessToken);
+      
       return access_token;
     }
   } catch (error) {
@@ -103,18 +123,20 @@ export const getAlbums = async () => {
 export const getTracks = async () => {
   try {
     const accesstoken = await AsyncStorage.getItem('access_token');
+    // console.log('accesstoken =====', accesstoken);
     const tracks = await axios.get(
       'https://api.spotify.com/v1/tracks?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B',
       {
         headers: {Authorization: 'Bearer ' + accesstoken},
       },
     );
-    // console.log('track ========>', JSON.stringify(tracks.data.name, null, 2));
+    // console.log('track ========>', JSON.stringify(tracks, null, 2));
     return tracks;
   } catch (error) {
     console.log('error', error);
   }
 };
+
 
 export const getRecommendation = async () => {
   try {

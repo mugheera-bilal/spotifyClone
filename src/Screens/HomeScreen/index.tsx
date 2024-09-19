@@ -38,14 +38,20 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
 
         const tracksData = await getTracks();
         if (tracksData?.data?.tracks) {
+          // console.log('============>', tracksData?.data?.tracks.map(item => item.preview_url));
+          
           setTracks(tracksData.data.tracks);
         } else {
           console.error('Error fetching tracks data:', tracksData);
         }
 
         const recommendationData = await getRecommendation();
+        const previewUrl = recommendationData?.data?.tracks.filter(item => item.preview_url)
+        console.log('recommedation ============>', recommendationData?.data?.tracks.filter(item => item.preview_url))
+        if (previewUrl) {
+          setRecommendation(recommendationData?.data.tracks);
 
-        setRecommendation(recommendationData?.data.tracks);
+        }
       }
     };
     init();
