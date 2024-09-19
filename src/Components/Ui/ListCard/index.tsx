@@ -1,11 +1,9 @@
 import {FC} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
 import {FlatList, Image, Pressable, Text, View} from 'react-native';
-import Title from '../Title';
 import IconButton from '../IconButton';
 import {images} from '../../../Assets/Images';
 import {styles} from './styles';
-import {SONGSDATA} from '../../../Util/SongData';
 
 const PlaylistCard: FC<IHome> = ({onPress, playlistRenderData}) => {
   return (

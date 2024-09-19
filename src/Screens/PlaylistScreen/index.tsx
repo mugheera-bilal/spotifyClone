@@ -54,7 +54,7 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
     });
   }, []);
 
-  function musicPlayerNavHandler(id) {
+  function musicPlayerNavHandler(id : string) {
     navigation.navigate('MusicPlayer', {
       songsId: id,
     });
@@ -68,7 +68,7 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
         let albumSongs = await getAlbumSongs(albumId);
         setSongsData(albumSongs?.data);
         const totalDurationMs = albumSongs?.data?.tracks.items.reduce(
-          (acc, song) => acc + song.duration_ms,
+          (acc : any, song : any) => acc + song.duration_ms,
           0,
         );
 
@@ -125,7 +125,7 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
 
       <PlaylistCard
         playlistRenderData={songsData?.tracks?.items}
-        onPress={id => musicPlayerNavHandler(id)}
+        onPress={(id : string) => musicPlayerNavHandler(id)}
       />
     </View>
   );

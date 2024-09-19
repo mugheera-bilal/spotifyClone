@@ -46,12 +46,10 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
         }
 
         const recommendationData = await getRecommendation();
-        const previewUrl = recommendationData?.data?.tracks.filter(item => item.preview_url)
-        console.log('recommedation ============>', recommendationData?.data?.tracks.filter(item => item.preview_url))
-        if (previewUrl) {
-          setRecommendation(recommendationData?.data.tracks);
-
-        }
+        // const previewUrl = recommendationData?.data?.tracks.filter(item => item.preview_url)
+        // console.log('recommedation ============>', recommendationData?.data?.tracks.filter(item => item.preview_url))
+        // if (previewUrl) {}
+        setRecommendation(recommendationData?.data.tracks);
       }
     };
     init();
@@ -59,7 +57,7 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
 
   // console.log('albums ==>>',albums);
 
-  function playlistNavigationHandler(id) {
+  function playlistNavigationHandler(id : string) {
     // console.log('id ==============>', id);
 
     navigation.navigate('Playlist', {
@@ -67,7 +65,7 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
     });
   }
 
-  function musicPlayerNavigationHandler(id) {
+  function musicPlayerNavigationHandler(id : string) {
     // console.log('id ==============>', id);
 
     navigation.navigate('MusicPlayer', {
@@ -102,7 +100,7 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
               </View>
               <ArtistCard
                 albumsRenderData={albums}
-                onPress={id => playlistNavigationHandler(id)}
+                onPress={( id : string) => playlistNavigationHandler(id)}
               />
             </View>
 
@@ -110,14 +108,14 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
               <Title text="Trending Now" />
               <CardList
                 tracksRenderData={tracks}
-                onPress={(id) => musicPlayerNavigationHandler(id)}
-              />
+                onPress={(id : string) => musicPlayerNavigationHandler(id)}
+              /> 
             </View>
             <View>
               <Title text="Top picks for you" />
               <CardList
                 tracksRenderData={recommendation}
-                onPress={(id) => musicPlayerNavigationHandler(id)}
+                onPress={(id : string) => musicPlayerNavigationHandler(id)}
               />
             </View>
           </View>

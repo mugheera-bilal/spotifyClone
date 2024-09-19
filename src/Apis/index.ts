@@ -51,7 +51,7 @@ export const fetchSpotifyToken = async () => {
       
       return access_token;
     }
-  } catch (error) {
+  } catch (error : any) {
     console.error(
       'Error fetching access token:',
       error.response?.data || error,
