@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useLayoutEffect, useState} from 'react';
 import {IHome} from '../../Constants/Interfaces';
 import {Image, Text, View} from 'react-native';
 import {images} from '../../Assets/Images';
@@ -9,31 +9,36 @@ import PlaylistCard from '../../Components/Ui/ListCard';
 import {getAlbumSongs} from '../../Apis';
 
 const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
-  const [songsData, setSongsData] = useState<any[]>([]);
+  const [songsData, setSongsData] = useState({});
+  const [formattedTime, setFormattedTime] = useState('');
 
   const {albumId} = route.params;
-  // console.log('albumID ==>> ', albumId);
-  useEffect(() => {
-    const fetchSongsForAllAlbums = async () => {
+
+  useLayoutEffect(() => {
+    async function fetchsongs() {
       try {
-        let albumSongs = await getAlbumSongs(albumId);
-        setSongsData(albumSongs?.data);
+        const response = await getAlbumSongs(albumId);
 
-        // console.log(
-        //   ' albumSongs?.data?.tracks.items duration =============>',
-        //   albumSongs?.data?.tracks.items.map((item) => item.duration_ms),
-        // );
+        const filteredSongs = response?.data?.tracks.items.filter(
+          (item: {preview_url: string | null}) => !!item.preview_url
+        );
+
+        setSongsData((prevData) => ({
+          ...prevData,
+          ...response?.data,
+          tracks: {
+            ...response?.data.tracks,
+            items: filteredSongs,  
+          },
+        }));
       } catch (error) {
-        console.error('Error fetching songs:', error);
+        console.log("Error fetching songs using album ID");
       }
-    };
-
-    if (albumId?.length) {
-      fetchSongsForAllAlbums();
     }
+
+    fetchsongs();
   }, [albumId]);
 
-  // console.log('======> ' , JSON.stringify(songsData[0].artists[0].name, null , 2))
   function backButtonHandler() {
     navigation.goBack();
   }
@@ -54,45 +59,30 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
     });
   }, []);
 
-  function musicPlayerNavHandler(id : string) {
+  function musicPlayerNavHandler(id: string) {
     navigation.navigate('MusicPlayer', {
       songsId: id,
     });
   }
 
-  const [formattedTime, setFormattedTime] = useState('');
-
   useEffect(() => {
-    const fetchSongsForAllAlbums = async () => {
-      try {
-        let albumSongs = await getAlbumSongs(albumId);
-        setSongsData(albumSongs?.data);
-        const totalDurationMs = albumSongs?.data?.tracks.items.reduce(
-          (acc : any, song : any) => acc + song.duration_ms,
-          0,
+    const calculateTotalDuration = () => {
+      if (songsData?.tracks?.items) {
+        const totalDurationMs = songsData.tracks.items.reduce(
+          (acc: number, song: any) => acc + song.duration_ms,
+          0
         );
-
-        // console.log('Total Duration in ms:', totalDurationMs);
 
         const hours = Math.floor(totalDurationMs / 3600000);
         const minutes = Math.floor((totalDurationMs % 3600000) / 60000);
         const seconds = Math.floor((totalDurationMs % 60000) / 1000);
 
-        // console.log(`Formatted Time: ${hours}h ${minutes}m ${seconds}s`);
-
-        // const formatted = `${hours}h ${minutes}m ${seconds}s`;
         setFormattedTime(`${hours}h ${minutes}m ${seconds}s`);
-      } catch (error) {
-        console.error('Error fetching songs:', error);
       }
     };
 
-    if (albumId?.length) {
-      fetchSongsForAllAlbums();
-    }
+    calculateTotalDuration();
   }, [songsData]);
-
-  // console.log(songsData.artists[0].name);
 
   return (
     <View style={styles.rootContainer}>
@@ -124,8 +114,8 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
       </View>
 
       <PlaylistCard
-        playlistRenderData={songsData?.tracks?.items}
-        onPress={(id : string) => musicPlayerNavHandler(id)}
+        playlistRenderData={songsData?.tracks?.items}  // Only filtered songs
+        onPress={(id: string) => musicPlayerNavHandler(id)}
       />
     </View>
   );
