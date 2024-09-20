@@ -1,5 +1,38 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loggedOut } from '../Redux/Reducer/authSlice';
+import { store } from '../Redux/Store/store';
+
+// const accessToken = AsyncStorage.getItem('access_token');
+
+const axiosInstance = axios.create({
+  baseURL: 'https://accounts.spotify.com/api',
+});
+
+const apiInstance = axios.create({
+  baseURL: 'https://api.spotify.com/v1'
+});
+
+apiInstance.interceptors.request.use(
+  (config) => {
+    // Get the latest accessToken from the Redux store
+    const token = store.getState()?.auth?.token;
+
+    if (token) {
+      // If token exists, set it in the Authorization header
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error); // Handle any request errors
+  }
+);
+
+
+
 
 export const fetchSpotifyToken = async () => {
   try {
@@ -9,46 +42,25 @@ export const fetchSpotifyToken = async () => {
     params.append('client_secret', '715eb2b01c8e482cb0721afc08814cec');
     const accessToken = await AsyncStorage.getItem('access_token');
     console.log('token above condition', accessToken);
-
-    // const axiosInstance = axios.create({
-    //   baseURL: 'https://accounts.spotify.com/api/token',
-    //   // other configurations
-    // })
-
-    // axiosInstance.interceptors.response.use(
-    //   (response) => response,
-    //   (error) => {
-    //     if (error.response && error.response.status === 401) {
-    //       console.log('call the refresh token api here')
-    //       // Handle 401 error, e.g., redirect to login or refresh token
-    //     }
-    //     return Promise.reject(error)
-    //   },
-    // )
-
-    if (accessToken) {
-      return accessToken;
-    }
-
-    if (!accessToken) {
-      const response = await axios.post(
-        'https://accounts.spotify.com/api/token',
-        params.toString(),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+    
+    const response = await axiosInstance.post(
+      '/token',
+      params.toString(),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-      );
-
-      const {access_token} = response.data;
-      console.log('Access token:', access_token);
-
-      await AsyncStorage.setItem('access_token', access_token);
-      console.log(accessToken);
-
-      return access_token;
-    }
+      },
+    );
+    
+    const {access_token} = response.data;
+    console.log('Access token:', access_token);
+    
+    await AsyncStorage.setItem('access_token', access_token);
+    console.log(accessToken);
+    
+    return access_token;
+    // }
   } catch (error: any) {
     console.error(
       'Error fetching access token:',
@@ -57,24 +69,23 @@ export const fetchSpotifyToken = async () => {
   }
 };
 
+apiInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      store.dispatch(loggedOut())
+
+      
+    }
+    return Promise.reject(error)
+  },
+)
+
 export async function getCategories() {
   try {
-    const accessToken = await AsyncStorage.getItem('access_token');
-    console.log('on getCategories', accessToken);
 
-    console.log('Retrieved access token:', accessToken);
-    if (!accessToken) {
-      console.log('No access token found');
-      return;
-    }
-
-    const response = await axios.get(
-      'https://api.spotify.com/v1/browse/categories',
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      },
+    const response = await apiInstance.get(
+      '/browse/categories',
     );
 
     // console.log('reponse ==> ', JSON.stringify(response, null, 2))
@@ -86,12 +97,8 @@ export async function getCategories() {
 
 export const getGenres = async () => {
   try {
-    const accesstoken = await AsyncStorage.getItem('access_token');
     const Genres = await axios.get(
-      'https://api.spotify.com/v1/recommendations/available-genre-seeds',
-      {
-        headers: {Authorization: 'Bearer ' + accesstoken},
-      },
+      'https://api.spotify.com/v1/recommendations/available-genre-seeds'
     );
     // console.log('Genres ========>', Genres);
     return Genres;
@@ -102,12 +109,8 @@ export const getGenres = async () => {
 
 export const getAlbums = async () => {
   try {
-    const accesstoken = await AsyncStorage.getItem('access_token');
-    const albums = await axios.get(
-      'https://api.spotify.com/v1/browse/new-releases',
-      {
-        headers: {Authorization: 'Bearer ' + accesstoken},
-      },
+    const albums = await apiInstance.get(
+      '/browse/new-releases'
     );
     // console.log('artist ========>', JSON.stringify(albums.data.albums, null, 2));
     return albums;
@@ -118,13 +121,9 @@ export const getAlbums = async () => {
 
 export const getTracks = async () => {
   try {
-    const accesstoken = await AsyncStorage.getItem('access_token');
     // console.log('accesstoken =====', accesstoken);
-    const tracks = await axios.get(
-      'https://api.spotify.com/v1/tracks?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B',
-      {
-        headers: {Authorization: 'Bearer ' + accesstoken},
-      },
+    const tracks = await apiInstance.get(
+      '/tracks?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B'
     );
     // console.log('track ========>', JSON.stringify(tracks, null, 2));
     return tracks;
@@ -135,12 +134,8 @@ export const getTracks = async () => {
 
 export const getRecommendation = async () => {
   try {
-    const accessToken = await AsyncStorage.getItem('access_token');
-    const recommendations = await axios.get(
-      'https://api.spotify.com/v1/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA',
-      {
-        headers: {Authorization: 'Bearer ' + accessToken},
-      },
+    const recommendations = await apiInstance.get(
+      '/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA',
     );
     return recommendations;
   } catch (error) {
@@ -150,12 +145,8 @@ export const getRecommendation = async () => {
 
 export const getAlbumSongs = async (id: string) => {
   try {
-    const accessToken = await AsyncStorage.getItem('access_token');
-    const albumSongs = await axios.get(
-      `https://api.spotify.com/v1/albums/${id}`,
-      {
-        headers: {Authorization: 'Bearer ' + accessToken},
-      },
+    const albumSongs = await apiInstance.get(
+      `/albums/${id}`
     );
     return albumSongs;
   } catch (error) {
@@ -165,12 +156,8 @@ export const getAlbumSongs = async (id: string) => {
 
 export const getSongs = async (id: string) => {
   try {
-    const accessToken = await AsyncStorage.getItem('access_token');
-    const albumSongs = await axios.get(
-      `https://api.spotify.com/v1/tracks/${id}`,
-      {
-        headers: {Authorization: 'Bearer ' + accessToken},
-      },
+    const albumSongs = await apiInstance.get(
+      `/tracks/${id}`
     );
 
     return albumSongs;
@@ -179,20 +166,4 @@ export const getSongs = async (id: string) => {
   }
 };
 
-export const getFeaturedPlaylist = async () => {
-  try {
-    const accesstoken = await AsyncStorage.getItem('access_token');
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'https://api.spotify.com/v1/browse/featured-playlists',
-      headers: {
-        Authorization: 'Bearer ' + accesstoken,
-      },
-    };
-    const response = await axios.request(config);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+

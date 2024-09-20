@@ -23,7 +23,6 @@ const LoginScreen: FC<IHome> = ({navigation}) => {
   }
 
   function loginButtonHandler() {
-    navigation.navigate('Home');
     init();
   }
 

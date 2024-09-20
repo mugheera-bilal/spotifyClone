@@ -1,27 +1,41 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import LoginOption from "../../Screens/Auth/LoginOption"
-import LoginScreen from "../../Screens/Auth/Login"
-import SignupScreen from "../../Screens/Auth/SignUp"
-import { theme } from "../../Constants/Colors/theme"
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import BootSplash from 'react-native-bootsplash';
+import StackNavigation from '../StackNavigation';
+import BottomNavigation from '../BottomNavigation';
+import {NavigationContainer} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
-function StackNavigation () {
-    return(
+function MainNavigation() {
 
-        <Stack.Navigator initialRouteName="loginPage" screenOptions={{
-          contentStyle : {backgroundColor : theme.secondary100},
-          headerShown : false
+  const authState = useSelector((state: any) => state.auth.loggedIn);
 
-        }}>
-        <Stack.Screen name="loginPage" component={LoginOption}/>
-        <Stack.Screen name="signup" component={SignupScreen}/>
-        <Stack.Screen name="login" component={LoginScreen}/>
-        
-    </Stack.Navigator>
+ 
 
-)
-
+  return (
+    <NavigationContainer
+      onReady={() => {
+        BootSplash.hide();
+      }}>
+      <Stack.Navigator>
+        { !authState ? (<Stack.Screen
+          name="loginOption"
+          component={StackNavigation}
+          options={{
+            headerShown: false,
+          }}
+        /> ) : (
+        <Stack.Screen
+          name="Home"
+          component={BottomNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />) }
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-export default StackNavigation
+export default MainNavigation;
