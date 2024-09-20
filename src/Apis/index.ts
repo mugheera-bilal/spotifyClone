@@ -5,17 +5,16 @@ export const fetchSpotifyToken = async () => {
   try {
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
-    params.append('client_id', '3e54cdfff4614487a4d334f528f9698a');
-    params.append('client_secret', '36025b877230438691105c08c16a90dc');
+    params.append('client_id', '252604bd30f54ebe947169ecf123b04a');
+    params.append('client_secret', '715eb2b01c8e482cb0721afc08814cec');
     const accessToken = await AsyncStorage.getItem('access_token');
     console.log('token above condition', accessToken);
-
 
     // const axiosInstance = axios.create({
     //   baseURL: 'https://accounts.spotify.com/api/token',
     //   // other configurations
     // })
-    
+
     // axiosInstance.interceptors.response.use(
     //   (response) => response,
     //   (error) => {
@@ -26,7 +25,6 @@ export const fetchSpotifyToken = async () => {
     //     return Promise.reject(error)
     //   },
     // )
-    
 
     if (accessToken) {
       return accessToken;
@@ -48,10 +46,10 @@ export const fetchSpotifyToken = async () => {
 
       await AsyncStorage.setItem('access_token', access_token);
       console.log(accessToken);
-      
+
       return access_token;
     }
-  } catch (error : any) {
+  } catch (error: any) {
     console.error(
       'Error fetching access token:',
       error.response?.data || error,
@@ -118,8 +116,6 @@ export const getAlbums = async () => {
   }
 };
 
-
-
 export const getTracks = async () => {
   try {
     const accesstoken = await AsyncStorage.getItem('access_token');
@@ -137,77 +133,66 @@ export const getTracks = async () => {
   }
 };
 
-
 export const getRecommendation = async () => {
   try {
-    const accessToken = await AsyncStorage.getItem('access_token')
+    const accessToken = await AsyncStorage.getItem('access_token');
     const recommendations = await axios.get(
       'https://api.spotify.com/v1/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA',
       {
-        headers : {Authorization : 'Bearer ' + accessToken},
+        headers: {Authorization: 'Bearer ' + accessToken},
       },
-    )
-    return recommendations
-  } catch  (error) {
-    console.log('error' , error);
-    
-  }
-}
-
-export const getAlbumSongs = async (id : string) =>  {
-  try{
-    const accessToken = await AsyncStorage.getItem('access_token')
-    const albumSongs = await axios.get(
-      `https://api.spotify.com/v1/albums/${id}`, {
-        headers : {Authorization : 'Bearer ' + accessToken},
-
-      }
-    )
-    return albumSongs
+    );
+    return recommendations;
   } catch (error) {
-    console.log('error' , error);
-    
+    console.log('error', error);
   }
+};
 
-}
-
-
-
-export const getSongs = async (id : string) =>  {
-  try{
-    const accessToken = await AsyncStorage.getItem('access_token')
+export const getAlbumSongs = async (id: string) => {
+  try {
+    const accessToken = await AsyncStorage.getItem('access_token');
     const albumSongs = await axios.get(
-      `https://api.spotify.com/v1/tracks/${id}`, {
-        headers : {Authorization : 'Bearer ' + accessToken},
-
-      }
-    )
-    
-    return albumSongs
+      `https://api.spotify.com/v1/albums/${id}`,
+      {
+        headers: {Authorization: 'Bearer ' + accessToken},
+      },
+    );
+    return albumSongs;
   } catch (error) {
-    console.log('error' , error);
-    
+    console.log('error', error);
   }
+};
 
-}
+export const getSongs = async (id: string) => {
+  try {
+    const accessToken = await AsyncStorage.getItem('access_token');
+    const albumSongs = await axios.get(
+      `https://api.spotify.com/v1/tracks/${id}`,
+      {
+        headers: {Authorization: 'Bearer ' + accessToken},
+      },
+    );
+
+    return albumSongs;
+  } catch (error) {
+    console.log('error', error);
+  }
+};
 
 export const getFeaturedPlaylist = async () => {
   try {
     const accesstoken = await AsyncStorage.getItem('access_token');
-      let config = {
-          method: 'get',
-          maxBodyLength: Infinity,
-          url: 'https://api.spotify.com/v1/browse/featured-playlists',
-          headers: {
-              Authorization: 'Bearer ' + accesstoken
-          }
-      };
-      const response = await axios.request(config);
-      return response.data;
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://api.spotify.com/v1/browse/featured-playlists',
+      headers: {
+        Authorization: 'Bearer ' + accesstoken,
+      },
+    };
+    const response = await axios.request(config);
+    return response.data;
   } catch (error) {
-      throw error;
+    throw error;
   }
 };
-
-
-

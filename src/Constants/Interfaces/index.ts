@@ -25,4 +25,7 @@ export interface IHome {
     playlistRenderData? :any
     item? : any
     albumId? :any
+    visible? : boolean
+    sharingPress? : any
+    pressCancel? : any
 } 

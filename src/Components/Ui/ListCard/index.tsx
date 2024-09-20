@@ -5,7 +5,7 @@ import IconButton from '../IconButton';
 import {images} from '../../../Assets/Images';
 import {styles} from './styles';
 
-const PlaylistCard: FC<IHome> = ({onPress, playlistRenderData}) => {
+const PlaylistCard: FC<IHome> = ({onPress, sharingPress,  playlistRenderData}) => {
   return (
     <View style={{ flex : 1}}>
 
@@ -24,7 +24,7 @@ const PlaylistCard: FC<IHome> = ({onPress, playlistRenderData}) => {
                     />
                 </View>
                 <View style={{margin: '2%'}}>
-                  <Text style={styles.titleTextStyle}>{item.name}</Text>
+                  <Text numberOfLines={1} ellipsizeMode='tail' style={styles.titleTextStyle}>{item.name}</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={styles.lyricsText}>LYRICS</Text>
                     <Text style={styles.textStyle}>{item.artists[0].name}</Text>
@@ -33,6 +33,7 @@ const PlaylistCard: FC<IHome> = ({onPress, playlistRenderData}) => {
               </View>
               <View>
                 <IconButton
+                onPress={sharingPress}
                   name="ellipsis-vertical-outline"
                   color="white"
                   size={28}

@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   titleTextStyle : {
+    width : 250,
     marginVertical : 5,
     textAlignVertical : 'center',
     color: 'white',

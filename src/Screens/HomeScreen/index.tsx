@@ -65,11 +65,12 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
     });
   }
 
-  function musicPlayerNavigationHandler(id : string) {
+  function musicPlayerNavigationHandler(id : string , preview_url : string) {
     // console.log('id ==============>', id);
 
     navigation.navigate('MusicPlayer', {
       songsId: id,
+      previewUrl : preview_url
     });
   }
 

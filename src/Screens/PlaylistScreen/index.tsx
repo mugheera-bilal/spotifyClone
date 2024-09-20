@@ -7,6 +7,8 @@ import IconButton from '../../Components/Ui/IconButton';
 import LogoButton from '../../Components/Ui/LogoButton';
 import PlaylistCard from '../../Components/Ui/ListCard';
 import {getAlbumSongs} from '../../Apis';
+import Share from 'react-native-share';
+
 
 const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   const [songsData, setSongsData] = useState({});
@@ -59,9 +61,13 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
     });
   }, []);
 
+  // console.log(songsData?.tracks?.items);
+  
+
   function musicPlayerNavHandler(id: string) {
     navigation.navigate('MusicPlayer', {
       songsId: id,
+      song : songsData?.tracks?.items
     });
   }
 
@@ -83,6 +89,25 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
 
     calculateTotalDuration();
   }, [songsData]);
+
+  // console.log('===========>' , songsData?.tracks.items.map(item => item.preview_url) );
+  
+  
+  function ShareHandler () {
+    const options = {
+      title : 'Share Song',
+      message : 'check this track out',
+      url : songsData?.tracks.items[0].preview_url
+    }
+    Share.open(options)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    err && console.log(err);
+  });
+  }
+
 
   return (
     <View style={styles.rootContainer}>
@@ -114,8 +139,9 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
       </View>
 
       <PlaylistCard
-        playlistRenderData={songsData?.tracks?.items}  // Only filtered songs
+        playlistRenderData={songsData?.tracks?.items} 
         onPress={(id: string) => musicPlayerNavHandler(id)}
+        sharingPress={ShareHandler}
       />
     </View>
   );
