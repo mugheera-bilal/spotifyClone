@@ -5,7 +5,7 @@ import Title from '../../Components/Ui/Title';
 import {styles} from './styles';
 import SearchHolder from '../../Components/Ui/SearchHolder';
 import SearchCard from '../../Components/Ui/SearchCard';
-import {fetchSpotifyToken, getCategories, getGenres} from '../../Apis';
+import { getCategories, getGenres} from '../../Apis';
 
 const SearchScreen: FC<IHome> = () => {
   const [browseCategories, setBrowseCategories] = useState([]);
@@ -24,10 +24,7 @@ const SearchScreen: FC<IHome> = () => {
 
   useEffect(() => {
     const init = async () => {
-      const token = await fetchSpotifyToken();
-      console.log('..........', token);
-
-      if (token) {
+   
         const responseCategories = await getCategories();
         if (responseCategories) {
           const categoryNames = responseCategories.data.categories.items.map(
@@ -41,7 +38,6 @@ const SearchScreen: FC<IHome> = () => {
         const genresName = responseGenres?.data.genres;
         // console.log('genresName',genresName);
         setGenres(genresName);
-      }
     };
 
     init();

@@ -1,18 +1,30 @@
-import {FC} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {FC, useEffect} from 'react';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {images} from '../../../Assets/Images';
 import InputHolder from '../../../Components/Ui/InputHolder';
 import CustomButton from '../../../Components/Ui/CustomButton';
 import {IHome} from '../../../Constants/Interfaces';
+import {fetchSpotifyToken} from '../../../Apis';
+import {useDispatch} from 'react-redux';
+import {loggedIn} from '../../../Redux/Reducer/authSlice';
 
 const LoginScreen: FC<IHome> = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const init = async () => {
+    const accessToken = await fetchSpotifyToken();
+    console.log('------>', accessToken);
+    dispatch(loggedIn(accessToken));
+  };
+
   function signUpNavigationHandler() {
     navigation.navigate('signup');
   }
 
   function loginButtonHandler() {
     navigation.navigate('Home');
+    init();
   }
 
   return (

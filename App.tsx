@@ -5,6 +5,8 @@ import {StyleSheet} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import StackNavigation from './src/Navigation/MainNavigation';
 import BottomNavigation from './src/Navigation/BottomNavigation';
+import { Provider } from 'react-redux';
+import { store } from './src/Redux/Store/store';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +14,8 @@ const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
 
   return (
+    <Provider store={store}>
+
     <NavigationContainer
       onReady={() => {
         BootSplash.hide();
@@ -25,6 +29,7 @@ function App(): React.JSX.Element {
         }}/>
       </Stack.Navigator>
     </NavigationContainer>
+        </Provider>
   );
 }
 

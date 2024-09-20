@@ -6,58 +6,54 @@ import Title from '../../Components/Ui/Title';
 import LinearGradient from 'react-native-linear-gradient';
 import LogoButton from '../../Components/Ui/LogoButton';
 import {images} from '../../Assets/Images';
-import {
-  fetchSpotifyToken,
-  getAlbums,
-  getRecommendation,
-  getTracks,
-} from '../../Apis';
+import {getAlbums, getRecommendation, getTracks} from '../../Apis';
 import ArtistCard from '../../Components/Ui/ArtistCard';
 import CardList from '../../Components/CardList';
+import {useSelector} from 'react-redux';
 
-const HomeScreen: FC<IHome> = ({navigation, route}) => {
+const HomeScreen: FC<IHome> = ({navigation}) => {
   const [albums, setAlbums] = useState<any[]>([]);
   const [tracks, setTracks] = useState<any[]>([]);
   const [recommendation, setRecommendation] = useState<any[]>([]);
 
+  const authState = useSelector((state: any) => state.auth.loggedIn);
+  const authToken = useSelector((state: any) => state.auth.token);
+  console.log('=============> ', authState);
+  console.log('=============> ', authToken);
+
   useEffect(() => {
     const init = async () => {
-      const token = await fetchSpotifyToken();
-      console.log('..........', token);
+      const albumsData: any = await getAlbums();
+      if (albumsData?.data?.albums) {
+        // const albumId = albumsData.data.albums.items.map(item => item.id);
+        // console.log('id  ==>>', albumId);
 
-      if (token) {
-        const albumsData: any = await getAlbums();
-        if (albumsData?.data?.albums) {
-          // const albumId = albumsData.data.albums.items.map(item => item.id);
-          // console.log('id  ==>>', albumId);
-
-          setAlbums(albumsData?.data.albums.items);
-        } else {
-          console.log('error fetching albums data', albumsData);
-        }
-
-        const tracksData = await getTracks();
-        if (tracksData?.data?.tracks) {
-          // console.log('============>', tracksData?.data?.tracks.map(item => item.preview_url));
-          
-          setTracks(tracksData.data.tracks);
-        } else {
-          console.error('Error fetching tracks data:', tracksData);
-        }
-
-        const recommendationData = await getRecommendation();
-        // const previewUrl = recommendationData?.data?.tracks.filter(item => item.preview_url)
-        // console.log('recommedation ============>', recommendationData?.data?.tracks.filter(item => item.preview_url))
-        // if (previewUrl) {}
-        setRecommendation(recommendationData?.data.tracks);
+        setAlbums(albumsData?.data.albums.items);
+      } else {
+        console.log('error fetching albums data', albumsData);
       }
+
+      const tracksData = await getTracks();
+      if (tracksData?.data?.tracks) {
+        // console.log('============>', tracksData?.data?.tracks.map(item => item.preview_url));
+
+        setTracks(tracksData.data.tracks);
+      } else {
+        console.error('Error fetching tracks data:', tracksData);
+      }
+
+      const recommendationData = await getRecommendation();
+      // const previewUrl = recommendationData?.data?.tracks.filter(item => item.preview_url)
+      // console.log('recommedation ============>', recommendationData?.data?.tracks.filter(item => item.preview_url))
+      // if (previewUrl) {}
+      setRecommendation(recommendationData?.data.tracks);
     };
     init();
   }, []);
 
   // console.log('albums ==>>',albums);
 
-  function playlistNavigationHandler(id : string) {
+  function playlistNavigationHandler(id: string) {
     // console.log('id ==============>', id);
 
     navigation.navigate('Playlist', {
@@ -65,12 +61,12 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
     });
   }
 
-  function musicPlayerNavigationHandler(id : string , preview_url : string) {
+  function musicPlayerNavigationHandler(id: string, preview_url: string) {
     // console.log('id ==============>', id);
 
     navigation.navigate('MusicPlayer', {
       songsId: id,
-      previewUrl : preview_url
+      previewUrl: preview_url,
     });
   }
 
@@ -101,7 +97,7 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
               </View>
               <ArtistCard
                 albumsRenderData={albums}
-                onPress={( id : string) => playlistNavigationHandler(id)}
+                onPress={(id: string) => playlistNavigationHandler(id)}
               />
             </View>
 
@@ -109,14 +105,14 @@ const HomeScreen: FC<IHome> = ({navigation, route}) => {
               <Title text="Trending Now" />
               <CardList
                 tracksRenderData={tracks}
-                onPress={(id : string) => musicPlayerNavigationHandler(id)}
-              /> 
+                onPress={(id: string) => musicPlayerNavigationHandler(id)}
+              />
             </View>
             <View>
               <Title text="Top picks for you" />
               <CardList
                 tracksRenderData={recommendation}
-                onPress={(id : string) => musicPlayerNavigationHandler(id)}
+                onPress={(id: string) => musicPlayerNavigationHandler(id)}
               />
             </View>
           </View>
