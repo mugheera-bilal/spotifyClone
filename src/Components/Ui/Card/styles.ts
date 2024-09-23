@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../Constants/Colors/theme';
 import { Fonts } from '../../../Constants/Fonts/Fonts';
+import { DHeight, DWidth } from '../../../Constants/Dimensions';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,8 +13,8 @@ opacity : 0.8
 
   },
   imageStyle: {
-    width: 170,
-    height: 170,
+    width: DWidth * 39,
+    height: DHeight * 19,
     marginBottom: 10,
   },
   titleTextStyle: {

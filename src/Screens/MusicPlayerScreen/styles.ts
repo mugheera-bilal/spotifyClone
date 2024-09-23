@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import Title from '../../Components/Ui/Title';
 import { Fonts } from '../../Constants/Fonts/Fonts';
+import { DHeight, DWidth } from '../../Constants/Dimensions';
 
 export const styles = StyleSheet.create({
   topStyle: {
@@ -21,9 +21,9 @@ export const styles = StyleSheet.create({
   },
   imageStyle: {
     alignSelf: 'center',
-    width: 350,
-    height: 350,
-    marginTop: 100,
+    width: DWidth * 85,
+    height: DHeight * 43,
+    marginTop: DHeight * 10,
   },
   playLineStyle: {
     alignSelf : 'center',

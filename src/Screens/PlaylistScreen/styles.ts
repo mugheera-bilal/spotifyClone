@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../Constants/Colors/theme';
 import { Fonts } from '../../Constants/Fonts/Fonts';
+import { DHeight, DWidth } from '../../Constants/Dimensions';
 
 export const styles = StyleSheet.create({
   rootContainer: {
@@ -16,8 +17,8 @@ export const styles = StyleSheet.create({
   },
   imageCardStyle: {
     margin: 20,
-    width: 250,
-    height: 270,
+    width: DWidth * 65,
+    height: DHeight * 35,
   },
   textStyle: {
     color: 'white',
