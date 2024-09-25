@@ -4,13 +4,14 @@ import { Fonts } from '../../Constants/Fonts/Fonts';
 import { DHeight, DWidth } from '../../Constants/Dimensions';
 
 export const styles = StyleSheet.create({
+  mainContainer : {
+    flex : 1,
+    backgroundColor : theme.secondary100
+  },
   rootContainer: {
     flex: 1,
-    // height : 1000,
     paddingHorizontal: 4,
     backgroundColor: theme.secondary100,
-    // paddingBottom : 60
-    // justifyContent : 'center'
   },
   imageContainer: {
     alignItems: 'center',

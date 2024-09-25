@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 

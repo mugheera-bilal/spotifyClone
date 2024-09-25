@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {images} from '../../../Assets/Images';
 import InputHolder from '../../../Components/Ui/InputHolder';

@@ -1,6 +1,6 @@
 import {FC, useEffect, useLayoutEffect, useState} from 'react';
 import {IHome} from '../../Constants/Interfaces';
-import {Button, Image, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {images} from '../../Assets/Images';
 import {styles} from './styles';
 import IconButton from '../../Components/Ui/IconButton';
@@ -8,20 +8,18 @@ import LogoButton from '../../Components/Ui/LogoButton';
 import PlaylistCard from '../../Components/Ui/ListCard';
 import {getAlbumSongs} from '../../Apis';
 import Share from 'react-native-share';
-import {ScrollView} from 'react-native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {theme} from '../../Constants/Colors/theme';
 import Animated, {
-  Extrapolate,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import {DHeight, DWidth} from '../../Constants/Dimensions';
+import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
-  const [songsData, setSongsData] = useState({});
+  const [songsData, setSongsData] = useState<any>();
   const [formattedTime, setFormattedTime] = useState('');
 
   const {albumId} = route.params;
@@ -35,7 +33,7 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
           (item: {preview_url: string | null}) => !!item.preview_url,
         );
 
-        setSongsData(prevData => ({
+        setSongsData((prevData: any) => ({
           ...prevData,
           ...response?.data,
           tracks: {
@@ -119,14 +117,37 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   const tabBarHeight = useBottomTabBarHeight();
 
   const Y = useSharedValue(0);
-
+  
   const scrollHandler = useAnimatedScrollHandler(event => {
     Y.value = event.contentOffset.y;
-    console.log(event.contentOffset.y);
+    // console.log(event.contentOffset.y);
   });
+  
+  useEffect(() => {
+    if (Y.value >= 200) {
+      navigation.setOptions({
+        headerTransparent: false,
+        headerTintColor : 'black',
+        title:  songsData?.tracks?.items[0]?.artists[0]?.name || 'Top Tracks', // 
+      });
+    } else {
+      navigation.setOptions({
+        headerTransparent: true,
+        title: '', 
+      });
+    }
+  }, [Y.value, navigation]);
+
+  const animatedImageViewStyle = useAnimatedStyle(() => {
+    const translateY = interpolate(Y.value, [0, 150], [0, 100], 'clamp');
+    return {
+      translateY,
+    };
+  });
+
   const animatedImageStyle = useAnimatedStyle(() => {
-    const scale = interpolate(Y.value, [0, 100], [1, 0.5], 'clamp');
-    const opacity = interpolate(Y.value, [0, 200], [1, 0], 'clamp');
+    const scale = interpolate(Y.value * 0.5, [0, 100], [1, 0.4], 'clamp');
+    const opacity = interpolate(Y.value, [0, 150], [1, 0], 'clamp');
 
     return {
       transform: [{scale}],
@@ -135,7 +156,7 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   });
 
   const animatedTextStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(Y.value, [0, 200], [0, 1], 'clamp');
+    const translateY = interpolate(Y.value, [0, 150], [0, -70], 'clamp');
 
     return {
       translateY,
@@ -143,53 +164,61 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   });
 
   return (
-    <Animated.ScrollView
-      onScroll={scrollHandler}
-      scrollEventThrottle={16}
-      contentContainerStyle={{
-        paddingBottom: tabBarHeight,
-        backgroundColor: theme.secondary100,
-      }}>
-      <Animated.View style={[styles.rootContainer, animatedTextStyle]}>
-        <Animated.View style={styles.imageContainer}>
-          <Animated.Image
-            style={[styles.imageCardStyle, animatedImageStyle]}
-            source={images.CardPics}
-          />
-        </Animated.View>
-        {/* <Image style={styles.imageCardStyle}  source={images.CardPics} /> */}
-        {/* </View> */}
-        {songsData && (
-          <Text style={styles.textStyle}>
-            Tune in to Top Tracks from{' '}
-            {songsData?.tracks?.items[0]?.artists[0]?.name}
-          </Text>
-        )}
-        <View style={{flexDirection: 'row'}}>
-          <Image style={styles.logoStyle} source={images.mainGreenLogo} />
-          <Text style={styles.spotifyText}>Spotify</Text>
-        </View>
-        <View>
-          <Text style={styles.textStyle}>191,165 Likes . {formattedTime}</Text>
-        </View>
-        <View style={styles.logosContainer}>
-          <View style={styles.playLogoContainer}>
-            <LogoButton source={images.heartLogo} />
-            <LogoButton
-              overrideStyle={styles.overridePropLogo}
-              source={images.propertiesLogo}
+    <View style={styles.mainContainer}>
+      <Animated.ScrollView
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          // flex : 1,
+          paddingBottom: tabBarHeight,
+          backgroundColor: theme.secondary100,
+        }}>
+        <Animated.View style={styles.rootContainer}>
+          <Animated.View
+            style={[styles.imageContainer, animatedImageViewStyle]}>
+            <Animated.Image
+              style={[styles.imageCardStyle, animatedImageStyle]}
+              source={images.CardPics}
             />
-          </View>
-          <LogoButton source={images.playGreenLogo} />
-        </View>
+          </Animated.View>
+          {/* <Image style={styles.imageCardStyle}  source={images.CardPics} /> */}
+          {/* </View> */}
+          <Animated.View style={animatedTextStyle}>
+            {songsData && (
+              <Animated.Text style={styles.textStyle}>
+                Tune in to Top Tracks from{' '}
+                {songsData?.tracks?.items[0]?.artists[0]?.name}
+              </Animated.Text>
+            )}
+            <View style={{flexDirection: 'row'}}>
+              <Image style={styles.logoStyle} source={images.mainGreenLogo} />
+              <Text style={styles.spotifyText}>Spotify</Text>
+            </View>
+            <View>
+              <Text style={styles.textStyle}>
+                191,165 Likes . {formattedTime}
+              </Text>
+            </View>
+            <View style={styles.logosContainer}>
+              <View style={styles.playLogoContainer}>
+                <LogoButton source={images.heartLogo} />
+                <LogoButton
+                  overrideStyle={styles.overridePropLogo}
+                  source={images.propertiesLogo}
+                />
+              </View>
+              <LogoButton source={images.playGreenLogo} />
+            </View>
 
-        <PlaylistCard
-          playlistRenderData={songsData?.tracks?.items}
-          onPress={(id: string) => musicPlayerNavHandler(id)}
-          sharingPress={ShareHandler}
-        />
-      </Animated.View>
-    </Animated.ScrollView>
+            <PlaylistCard
+              playlistRenderData={songsData?.tracks?.items}
+              onPress={(id: string) => musicPlayerNavHandler(id)}
+              sharingPress={ShareHandler}
+            />
+          </Animated.View>
+        </Animated.View>
+      </Animated.ScrollView>
+    </View>
   );
 };
 

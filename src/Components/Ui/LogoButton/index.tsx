@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IHome } from "../../../Constants/Interfaces";
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable } from "react-native";
 import { styles } from "./styles";
 
 const LogoButton : FC<IHome> = ({onPress, source, overrideStyle}) => {

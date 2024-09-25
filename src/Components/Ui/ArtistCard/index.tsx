@@ -4,7 +4,7 @@ import {FlatList, Image, Pressable, Text, View} from 'react-native';
 import {images} from '../../../Assets/Images';
 import {styles} from './styles';
 
-const ArtistCard: FC<IHome> = ({onPress, albumsRenderData, albumId}) => {
+const ArtistCard: FC<IHome> = ({onPress, albumsRenderData}) => {
   const trimName = (name: string) => {
     return name.length >= 15 ? name.slice(0, 15) + '...' : name;
   };
@@ -17,7 +17,7 @@ const ArtistCard: FC<IHome> = ({onPress, albumsRenderData, albumId}) => {
       renderItem={({item}) => {
         // console.log('Album iddddd');
         // console.log('item.duration_ms ===>>>');
-        
+
         // const albumId =  item.id
         // const artistNames = track.artists.map((artist: any) => artist.name).join(', ');
         return (

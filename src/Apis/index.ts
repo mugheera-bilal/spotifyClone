@@ -1,38 +1,30 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { loggedOut } from '../Redux/Reducer/authSlice';
-import { store } from '../Redux/Store/store';
-
-// const accessToken = AsyncStorage.getItem('access_token');
+import {loggedOut} from '../Redux/Reducer/authSlice';
+import {store} from '../Redux/Store/store';
 
 const axiosInstance = axios.create({
   baseURL: 'https://accounts.spotify.com/api',
 });
 
 const apiInstance = axios.create({
-  baseURL: 'https://api.spotify.com/v1'
+  baseURL: 'https://api.spotify.com/v1',
 });
 
 apiInstance.interceptors.request.use(
-  (config) => {
-    // Get the latest accessToken from the Redux store
+  config => {
     const token = store.getState()?.auth?.token;
 
     if (token) {
-      // If token exists, set it in the Authorization header
       config.headers['Authorization'] = `Bearer ${token}`;
     }
 
     return config;
   },
-  (error) => {
-    return Promise.reject(error); // Handle any request errors
-  }
+  error => {
+    return Promise.reject(error);
+  },
 );
-
-
-
 
 export const fetchSpotifyToken = async () => {
   try {
@@ -42,23 +34,19 @@ export const fetchSpotifyToken = async () => {
     params.append('client_secret', '715eb2b01c8e482cb0721afc08814cec');
     const accessToken = await AsyncStorage.getItem('access_token');
     console.log('token above condition', accessToken);
-    
-    const response = await axiosInstance.post(
-      '/token',
-      params.toString(),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+
+    const response = await axiosInstance.post('/token', params.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-    );
-    
+    });
+
     const {access_token} = response.data;
     console.log('Access token:', access_token);
-    
+
     await AsyncStorage.setItem('access_token', access_token);
     console.log(accessToken);
-    
+
     return access_token;
     // }
   } catch (error: any) {
@@ -70,23 +58,18 @@ export const fetchSpotifyToken = async () => {
 };
 
 apiInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response && error.response.status === 401) {
-      store.dispatch(loggedOut())
-
-      
+      store.dispatch(loggedOut());
     }
-    return Promise.reject(error)
+    return Promise.reject(error);
   },
-)
+);
 
 export async function getCategories() {
   try {
-
-    const response = await apiInstance.get(
-      '/browse/categories',
-    );
+    const response = await apiInstance.get('/browse/categories');
 
     // console.log('reponse ==> ', JSON.stringify(response, null, 2))
     return response;
@@ -98,7 +81,7 @@ export async function getCategories() {
 export const getGenres = async () => {
   try {
     const Genres = await axios.get(
-      'https://api.spotify.com/v1/recommendations/available-genre-seeds'
+      'https://api.spotify.com/v1/recommendations/available-genre-seeds',
     );
     // console.log('Genres ========>', Genres);
     return Genres;
@@ -109,9 +92,7 @@ export const getGenres = async () => {
 
 export const getAlbums = async () => {
   try {
-    const albums = await apiInstance.get(
-      '/browse/new-releases'
-    );
+    const albums = await apiInstance.get('/browse/new-releases');
     // console.log('artist ========>', JSON.stringify(albums.data.albums, null, 2));
     return albums;
   } catch (error) {
@@ -123,7 +104,7 @@ export const getTracks = async () => {
   try {
     // console.log('accesstoken =====', accesstoken);
     const tracks = await apiInstance.get(
-      '/tracks?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B'
+      '/tracks?ids=7ouMYWpwJ422jRcDASZB7P%2C4VqPOruhp5EdPBeR92t6lQ%2C2takcwOaAZWiXQijPHIx7B',
     );
     // console.log('track ========>', JSON.stringify(tracks, null, 2));
     return tracks;
@@ -145,9 +126,7 @@ export const getRecommendation = async () => {
 
 export const getAlbumSongs = async (id: string) => {
   try {
-    const albumSongs = await apiInstance.get(
-      `/albums/${id}`
-    );
+    const albumSongs = await apiInstance.get(`/albums/${id}`);
     return albumSongs;
   } catch (error) {
     console.log('error', error);
@@ -156,14 +135,10 @@ export const getAlbumSongs = async (id: string) => {
 
 export const getSongs = async (id: string) => {
   try {
-    const albumSongs = await apiInstance.get(
-      `/tracks/${id}`
-    );
+    const albumSongs = await apiInstance.get(`/tracks/${id}`);
 
     return albumSongs;
   } catch (error) {
     console.log('error', error);
   }
 };
-
-

@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {IHome} from '../../../Constants/Interfaces';
 import {Pressable, SectionList, Text, View} from 'react-native';
 import {styles} from './styles';

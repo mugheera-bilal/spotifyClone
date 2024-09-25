@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {images} from '../../../Assets/Images';
