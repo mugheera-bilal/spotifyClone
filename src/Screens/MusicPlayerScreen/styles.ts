@@ -64,7 +64,6 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontFamily : Fonts.gotham,
-
     color: 'white'
   },
   pressed : {

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, StyleProp, ViewStyle } from "react-native";
 
 export interface IHome {
     searchingCategories? : any
@@ -15,7 +15,7 @@ export interface IHome {
     name? : any,
     color? : string
     size? :number
-    customStyle? : object
+    customStyle? : StyleProp<ViewStyle>
     extraTitle? : any
     text? : string
     source? : ImageSourcePropType

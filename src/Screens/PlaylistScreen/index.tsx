@@ -12,11 +12,12 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {theme} from '../../Constants/Colors/theme';
 import Animated, {
   interpolate,
+  interpolateColor,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
+// import {opacity} from 'react-native-reanimated/lib/typescript/Colors';
 
 const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   const [songsData, setSongsData] = useState<any>();
@@ -62,9 +63,23 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
             name="chevron-back-outline"
             color="white"
             size={34}
-            customStyle={{marginHorizontal: 0}}
+            customStyle={{marginHorizontal: 0 }}
           />
         );
+      },
+     
+      headerTitleAlign: 'center',
+      headerTitle: () => {
+        return (
+          <Animated.View style={[styles.headerTitleContainer, animatedHeaderStyle]}>
+            <Animated.Text style={styles.headerCenter}>
+              {songsData?.name}
+            </Animated.Text>
+          </Animated.View>
+        );
+      },
+      headerStyle: {
+        backgroundColor: theme.secondary50,
       },
     });
   }, []);
@@ -117,26 +132,27 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   const tabBarHeight = useBottomTabBarHeight();
 
   const Y = useSharedValue(0);
-  
+
   const scrollHandler = useAnimatedScrollHandler(event => {
     Y.value = event.contentOffset.y;
     // console.log(event.contentOffset.y);
   });
-  
-  useEffect(() => {
-    if (Y.value >= 200) {
-      navigation.setOptions({
-        headerTransparent: false,
-        headerTintColor : 'black',
-        title:  songsData?.tracks?.items[0]?.artists[0]?.name || 'Top Tracks', // 
-      });
-    } else {
-      navigation.setOptions({
-        headerTransparent: true,
-        title: '', 
-      });
-    }
-  }, [Y.value, navigation]);
+
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(Y.value, [150, 200], [0, 1], 'clamp');
+    return {opacity};
+  });
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    const backgroundColor: any = interpolateColor(
+      Y.value,
+      [0, 150],
+      ['transparent', '#FF0000'],
+    );
+    return {
+      backgroundColor,
+    };
+  });
 
   const animatedImageViewStyle = useAnimatedStyle(() => {
     const translateY = interpolate(Y.value, [0, 150], [0, 100], 'clamp');
@@ -165,6 +181,10 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
 
   return (
     <View style={styles.mainContainer}>
+      <Animated.View
+        style={[styles.animatedHeaderBackground, animatedBackgroundStyle]}
+      />
+
       <Animated.ScrollView
         onScroll={scrollHandler}
         scrollEventThrottle={16}
