@@ -56,33 +56,30 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: () => {
+      header: () => {
         return (
-          <IconButton
-            onPress={backButtonHandler}
-            name="chevron-back-outline"
-            color="white"
-            size={34}
-            customStyle={{marginHorizontal: 0 }}
-          />
-        );
-      },
-     
-      headerTitleAlign: 'center',
-      headerTitle: () => {
-        return (
-          <Animated.View style={[styles.headerTitleContainer, animatedHeaderStyle]}>
-            <Animated.Text style={styles.headerCenter}>
-              {songsData?.name}
-            </Animated.Text>
+          <Animated.View
+            style={[styles.headerLeftContainer, animatedBackgroundStyle]}>
+            <View>
+              <IconButton
+                onPress={backButtonHandler}
+                name="chevron-back-outline"
+                color="white"
+                size={34}
+                customStyle={{marginHorizontal: 0}}
+              />
+            </View>
+            <Animated.View
+              style={[styles.headerTitleContainer, animatedHeaderStyle]}>
+              <Animated.Text style={styles.headerCenter}>
+                {songsData?.name}
+              </Animated.Text>
+            </Animated.View>
           </Animated.View>
         );
       },
-      headerStyle: {
-        backgroundColor: theme.secondary50,
-      },
     });
-  }, []);
+  }, [navigation, songsData]);
 
   // console.log(songsData?.tracks?.items);
 
@@ -146,8 +143,8 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
   const animatedBackgroundStyle = useAnimatedStyle(() => {
     const backgroundColor: any = interpolateColor(
       Y.value,
-      [0, 150],
-      ['transparent', '#FF0000'],
+      [150, 200],
+      ['transparent', theme.secondary50],
     );
     return {
       backgroundColor,
@@ -181,9 +178,9 @@ const PlaylistScreen: FC<IHome> = ({navigation, route}) => {
 
   return (
     <View style={styles.mainContainer}>
-      <Animated.View
-        style={[styles.animatedHeaderBackground, animatedBackgroundStyle]}
-      />
+      {/* <Animated.View
+        style={[styles.animatedHeaderBackground, ]}
+      /> */}
 
       <Animated.ScrollView
         onScroll={scrollHandler}

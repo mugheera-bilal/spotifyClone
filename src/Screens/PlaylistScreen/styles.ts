@@ -1,12 +1,12 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../Constants/Colors/theme';
-import { Fonts } from '../../Constants/Fonts/Fonts';
-import { DHeight, DWidth } from '../../Constants/Dimensions';
+import {Fonts} from '../../Constants/Fonts/Fonts';
+import {DHeight, DWidth} from '../../Constants/Dimensions';
 
 export const styles = StyleSheet.create({
-  mainContainer : {
-    flex : 1,
-    backgroundColor : theme.secondary100
+  mainContainer: {
+    flex: 1,
+    backgroundColor: theme.secondary100,
   },
   rootContainer: {
     flex: 1,
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontSize: 16,
-    fontFamily : Fonts.poppins,
+    fontFamily: Fonts.poppins,
     marginLeft: 10,
   },
   logoStyle: {
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '900',
-    fontFamily : Fonts.gotham,
+    fontFamily: Fonts.gotham,
 
     textAlignVertical: 'center',
     margin: 10,
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     height: 100,
   },
   logosContainer: {
-    marginHorizontal : 10,
+    marginHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -56,41 +56,19 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerLeftContainer: {
-    // flexDirection : 'row',
-    // alignItems : 'center',
-    // justifyContent: 'center',
-    backgroundColor : theme.secondary50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.secondary50,
   },
   headerTitleContainer: {
-    // flexDirection : 'row',
-    // alignItems : 'center',
-    // justifyContent: 'center',
-
-    // paddingHorizontal : '96.9%',
-    // paddingLeft : DWidth * 7,
-    backgroundColor : theme.secondary50,
+    paddingLeft: DWidth * 7,
   },
-  headerCenter:{
-    textAlign: 'center',
+  headerCenter: {
     fontSize: 24,
-    fontFamily : Fonts.gotham,
+    fontFamily: Fonts.gotham,
     color: 'white',
-    minWidth : '95%',
-    // marginRight : DWidth * 15.7,
-    // paddingRight : 250,
-    // minHeight : '100%',
-    // paddingHorizontal : DWidth * 15,
-    // paddingRight : '100%',
-    paddingVertical : DHeight * 1.5,
-    // borderRadius : 10
+    paddingVertical: DHeight * 1.5,
   },
-  animatedHeaderBackground: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 100, 
-    zIndex: 0,  
-  },
+
   overridePropLogo: {marginHorizontal: 20},
 });

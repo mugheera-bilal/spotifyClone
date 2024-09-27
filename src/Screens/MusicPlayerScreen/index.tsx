@@ -72,7 +72,6 @@ const MusicPlayerScreen: FC<IHome> = ({navigation, route}) => {
     };
   }, [songsId]);
 
-  // Play/Pause Handler
   const playPauseHandler = () => {
     if (sound) {
       if (Pause) {
@@ -81,7 +80,7 @@ const MusicPlayerScreen: FC<IHome> = ({navigation, route}) => {
             Alert.alert('Error', 'Failed to play the sound');
           }
         });
-        sound.setNumberOfLoops(loop ? -1 : 0); // Infinite loop if loop is enabled
+        sound.setNumberOfLoops(loop ? -1 : 0);
         setPause(false);
       } else {
         sound.pause();
@@ -90,7 +89,6 @@ const MusicPlayerScreen: FC<IHome> = ({navigation, route}) => {
     }
   };
 
-  // Handle navigation bar visibility
   useEffect(() => {
     navigation.getParent()?.setOptions({
       tabBarStyle: {display: 'none'},
@@ -112,9 +110,9 @@ const MusicPlayerScreen: FC<IHome> = ({navigation, route}) => {
 
   function backButtonHandler() {
     navigation.goBack();
+    // setPause(false)
   }
 
-  // Header customization
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (

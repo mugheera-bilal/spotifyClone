@@ -1,3 +1,4 @@
+import { NavigationAction } from "@react-navigation/native";
 import { ReactNode } from "react";
 import { ImageSourcePropType, StyleProp, ViewStyle } from "react-native";
 
